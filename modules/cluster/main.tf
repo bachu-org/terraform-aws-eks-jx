@@ -9,7 +9,12 @@ data "aws_eks_cluster_auth" "cluster" {
   name = var.create_eks ? module.eks.cluster_id : var.cluster_name
 }
 
-data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
 
 data "aws_caller_identity" "current" {}
 
